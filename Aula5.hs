@@ -25,7 +25,13 @@ execp mem (Atr var exp) =
             valor = exec mem exp
         in 
             (upsertAl var valor mem, [])
-
+execp mem (Se cond p1 p2) = 
+        let 
+            condicao = exec mem cond
+        in 
+             case (condicao) of
+                VBool True -> execp mem p1
+                VBool False -> execp mem p2
 
 -- funcao de sobrescrever variaveis
 upsertAl :: String -> Valor -> Memoria -> Memoria
